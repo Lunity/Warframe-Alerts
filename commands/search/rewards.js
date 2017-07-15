@@ -24,6 +24,8 @@ module.exports = {
       `rewards that include the term ${searchTerm.toUpperCase()} can be found at:`,
       rewards.length > 0 ? rewards.join("\n") : "NOWHERE",
       "tip: Try ',search mis LOCATION' for more reward info```"
-    ])
+    ]).catch((err) => {
+      message.channel.send("The response is too long to be sent. Please try a more specific term.");
+    })
   }
 }
