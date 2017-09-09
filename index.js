@@ -4,7 +4,10 @@ require("./util/timestamps.js");
 const Discord = require("discord.js");
 const config = Object.assign({}, require("./config.json"), require("./token.js")); // lul
 
-const bot = new Discord.Client();
+const bot = new Discord.Client({
+  messageCacheMaxSize: 50,
+  disabledEvents: ["TYPING_START", "USER_UPDATE"]
+});
 const recent_commanders = new Set();
 const commands = new Map();
 
