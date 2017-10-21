@@ -59,7 +59,7 @@ module.exports = {
     return new Promise((resolve) => {
       let a = new Promise((resolve) => {
         superagent.get("http://content.warframe.com/dynamic/worldState.php").end((err, content) => {
-          if (err) return console.log(error.status || error.response);
+          if (err) return console.log(err.status || err.response);
           worldState = enhanceWS(JSON.parse(content.text));
           resolve("Done PC");
         })
@@ -67,7 +67,7 @@ module.exports = {
       // ps4 ws http://content.ps4.warframe.com/dynamic/worldState.php
       let b = new Promise((resolve) => {
         superagent.get("http://content.ps4.warframe.com/dynamic/worldState.php").end((err, content) => {
-          if (err) return console.log(error.status || error.response);
+          if (err) return console.log(err.status || err.response);
           ps4WorldState = enhanceWS(JSON.parse(content.text));
           resolve("Done PS4");
         })
@@ -75,7 +75,7 @@ module.exports = {
       // xb1 ws http://content.xb1.warframe.com/dynamic/worldState.php
       let c = new Promise((resolve) => {
         superagent.get("http://content.xb1.warframe.com/dynamic/worldState.php").end((err, content) => {
-          if (err) return console.log(error.status || error.response);
+          if (err) return console.log(err.status || err.response);
           xb1WorldState = enhanceWS(JSON.parse(content.text));
           resolve("Done XB1");
         })

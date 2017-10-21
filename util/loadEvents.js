@@ -8,7 +8,7 @@ function reqEvents(bot, dir, config) {
       const event = file.slice(0, -3);
       console.log(`[EVENT LOAD] ${event}`);
       if (event !== "ready")
-        bot.on(event, (require(`../events/${file}`).bind(null, config)));
+        bot.on(event, (require(`../events/${file}`).bind(null, bot, config)));
       else
         bot.once(event, (require(`../events/${file}`).bind(null, bot, config, tasks)));
     })

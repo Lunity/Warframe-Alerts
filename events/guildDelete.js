@@ -1,7 +1,6 @@
 const superagent = require("superagent");
 
-module.exports = (config, guild) => {
-  const bot = guild.client;
+module.exports = (bot, config, guild) => {
   const log = bot.channels.get(config.logs);
   log.send(`Just left \`${guild.name}\`! Now in ${bot.guilds.size} guilds!`);
   let server_count = guild.client.guilds.size;

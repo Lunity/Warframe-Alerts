@@ -1,7 +1,6 @@
 const superagent = require("superagent");
 
-module.exports = (config, guild) => {
-  const bot = guild.client;
+module.exports = (bot, config, guild) => {
   const log = bot.channels.get(config.logs);
   const botcount = guild.members.filter((m) => m.user.bot).size;
   const totalcount = guild.members.size;
