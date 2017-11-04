@@ -1,25 +1,28 @@
 {
-  "name": "wf-bot-2.0",
-  "version": "2.0.0",
-  "description": "warframe discord bot redone",
-  "main": "run.js",
+  "name": "Warframe-Alerts",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
   "dependencies": {
-    "discord.js": "^11.1.0",
-    "superagent": "^3.5.2",
-    "xml2js": "^0.4.17"
+    "pg": "^7.4.0"
   },
   "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rei2hu/wf-bot-2.0.git"
+    "url": "git+https://github.com/rei2hu/Warframe-Alerts.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/rei2hu/wf-bot-2.0/issues"
+    "url": "https://github.com/rei2hu/Warframe-Alerts/issues"
   },
-  "homepage": "https://github.com/rei2hu/wf-bot-2.0#readme"
+  "homepage": "https://github.com/rei2hu/Warframe-Alerts/issues",
+  "engines": {
+      "node": "7.9.0",
+      "npm": "4.2.0"
+  }
 }
