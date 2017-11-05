@@ -55,7 +55,8 @@ class WebSocketConnection extends EventEmitter {
             "op": 1,
             "d": this.lastS
         }))
-        this.hb = setTimeout(this._hbtimeout.bind(this). this.hbinterval);
+        
+        this.hb = setTimeout(this._hbtimeout.bind(this), this.hbinterval);
     }
 
     _identifymyself() {
