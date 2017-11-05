@@ -1,6 +1,12 @@
 const WebSocket = require("./socket/WebSocketConnection");
-const settings = require("./settings.json");
-const conn = new WebSocket(settings.token);
+const conn;
+
+try {
+    const settings = require("./settings.json");
+    conn = new WebSocket(settings.token);
+} catch (e) {
+    conn = new WebSocket(process.env.DISCORD_TOKEN)
+}
 
 conn.on("message", message => {
     console.log(message);
