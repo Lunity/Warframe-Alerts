@@ -1,7 +1,3 @@
-token.js
-Makefile
+settings.json
 node_modules/
-datamine/*.bak
-test.js
-events.json
 *.js~

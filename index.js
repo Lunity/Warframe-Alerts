@@ -1,3 +1,12 @@
-setInterval(() => {
-    console.log("hello, i wont die and ill say this every 10 seconds");
-}, 10000)
+const WebSocket = require("./socket/WebSocketConnection");
+const settings = require("./settings.json");
+const conn = new WebSocket(settings.token);
+
+conn.on("message", message => {
+    console.log(message);
+})
+
+conn.on("close", data => {
+    console.error("socket closed");
+    console.error(data);
+})
