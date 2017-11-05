@@ -1,5 +1,5 @@
 const WebSocket = require("./socket/WebSocketConnection");
-const conn;
+let conn;
 
 try {
     const settings = require("./settings.json");
@@ -16,3 +16,5 @@ conn.on("close", data => {
     console.error("socket closed");
     console.error(data);
 })
+
+conn.on("debug", console.log);

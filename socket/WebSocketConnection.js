@@ -12,10 +12,14 @@ class WebSocketConnection extends EventEmitter {
 
     async _initialize(version, encoding) {
         try {
+            this.emit("debug", "Getting websocket url");
             const url = (await request.get("https://discordapp.com/api/gateway")).body.url;
+            this.emit("debug", "Creating websocket for " + url + `/?v=${version}&encoding=${encoding}`);
             this.socket = new WebSocket(url + `/?v=${version}&encoding=${encoding}`);
             // // //
-            this.socket.on("open", () => {});
+            this.socket.on("open", () => {
+                this.emit("debug", "Socket opened");
+            });
             this.socket.once("message", this._heartbeathandle.bind(this));
             this.socket.on("close", this._closehandle.bind(this));
         } catch (e) {
@@ -30,6 +34,8 @@ class WebSocketConnection extends EventEmitter {
             throw new Error("Expected heartbeat info packet but instead got op " + data.op);
         }
         
+        this.emit("debug", "Recieved heartbeat info");
+
         this.acked = true;
         this.hbinterval = data.d.heartbeat_interval;
         this.hb = setTimeout(this._hbtimeout.bind(this), this.hbinterval);
@@ -41,6 +47,9 @@ class WebSocketConnection extends EventEmitter {
             throw new Error("Did not recieve acknowledgement of heartbeat between them.");
             // try to resume
         }
+        
+        this.emit("debug", "Recieved heartbeat acknowledgement");
+
         this.acked = false;
         this.socket.send(JSON.stringify({
             "op": 1,
@@ -50,6 +59,9 @@ class WebSocketConnection extends EventEmitter {
     }
 
     _identifymyself() {
+        
+        this.emit("debug", "Sending identify packet");
+
         this.socket.send(JSON.stringify({
             "op": 2,
             "d": {
