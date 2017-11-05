@@ -1,6 +1,9 @@
 const request = require("snekfetch");
 const {Client} = require("pg");
 const {parseString} = require("xml2js");
+const AlertManager = require("./AlertManager");
+const InvasionManager = require("./InvasionManager");
+const MessageManager = require("./MessageManager");
 
 class EventManager {
 	constructor() {
@@ -9,20 +12,16 @@ class EventManager {
 			ssl: true
 		});
 		this.db.connect();
+		this.messageManager = new MessageManager();
+		this.alertManager = new AlertManager(this.db, this.messageManager);
+		this.invasionManager = new InvasionManager(this.db, this.messageManager);
 	}
 	
-	async ws() {
-		// header LITERALLY says its text, gg.
-		const ws = JSON.parse((await request.get("http://content.warframe.com/dynamic/worldState.php")).text);
-		console.log(ws.Invasions);
-	
-	}
-
 	async checkEvents() {
 		const text = (await request.get("http://content.warframe.com/dynamic/rss.php")).text;
 			   
 		parseString(text, (err, result) => {
-			console.log(result.rss.channel[0].item);
+			// console.log(result.rss.channel[0].item);
 			// item is an array of objects
 			// objects look like this
 			/*
@@ -47,7 +46,7 @@ class EventManager {
 					description = wfEvent.description[0];
 					date = new Date(wfEvent["wf:expiry"][0]).getTime() / 1000 >> 0;
 					loc = title[title.length - 2];
-					rewards = title.slice(0, -2).join(", ");
+					rewards = title.slice(0, -2).join("\n+ ");
 				} 
 				// invasion or outbreak
 				else {
@@ -62,12 +61,18 @@ class EventManager {
 						while ((match = rewardRegex.exec(title.slice(0, -1))) != null) {
 							rewards.push(match[1]);
 						}
-						rewards = rewards.join(", ");
+						rewards = rewards.join("\n+ ");
 					}
+				}
+				if (author === 0) {
+					this.alertManager.addAlert(guid, platform, author, rewards, loc, date, description);
+				} else {
+					this.invasionManager.addInvasion(guid, platform, author, rewards, loc);
 				}
 				// handling database
 				// insert current things into database
 				// yells on dupes but empty catch does it :^)
+				/*
 				this.db.query("insert into events (guid, platform, author, \
 					rewards, location, expirDate, description) values ($1, \
 					$2, $3, $4, $5, to_timestamp($6), $7)",
@@ -76,9 +81,10 @@ class EventManager {
 						// send update message to all channels
 					})
 					.catch();
+				*/
 				// remove old events 
 				// doesnt seem to affect nulls so thats fine
-				this.db.query("delete from events where expirdate <= now()")
+				
 			}
 		})
 	}
