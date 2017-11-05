@@ -1,36 +1,36 @@
 {
-  "name": "warframe-alerts",
-  "version": "0.0.1",
-  "description": "discord bot for keeping track of alerts and invasions in warframe",
-  "main": "index.js",
-  "dependencies": {
-    "pg": "^7.4.0",
-    "snekfetch": "^3.5.8",
-    "ws": "^3.3.0",
-    "xml2js": "^0.4.19"
-  },
-  "engines": {
-    "node": "8.0.0",
-    "npm": "4.2.0"
-  },
-  "devDependencies": {},
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/rei2hu/Warframe-Alerts.git"
-  },
-  "keywords": [
-    "warframe",
-    "discord",
-    "bot"
-  ],
-  "author": "rei2hu",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/rei2hu/Warframe-Alerts/issues"
-  },
-  "homepage": "https://github.com/rei2hu/Warframe-Alerts#readme"
+	"name": "warframe-alerts",
+		"version": "0.0.1",
+		"description": "discord bot for keeping track of alerts and invasions in warframe",
+		"main": "index.js",
+		"dependencies": {
+			"pg": "^7.4.0",
+			"snekfetch": "^3.5.8",
+			"ws": "^3.3.0",
+			"xml2js": "^0.4.19"
+		},
+		"engines": {
+			"node": "8.0.0",
+			"npm": "4.2.0"
+		},
+		"devDependencies": {},
+		"scripts": {
+			"test": "echo \"Error: no test specified\" && exit 1",
+			"start": "node index.js"
+		},
+		"repository": {
+			"type": "git",
+			"url": "git+https://github.com/rei2hu/Warframe-Alerts.git"
+		},
+		"keywords": [
+			"warframe",
+		"discord",
+		"bot"
+		],
+		"author": "rei2hu",
+		"license": "ISC",
+		"bugs": {
+			"url": "https://github.com/rei2hu/Warframe-Alerts/issues"
+		},
+		"homepage": "https://github.com/rei2hu/Warframe-Alerts#readme"
 }
