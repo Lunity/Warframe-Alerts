@@ -44,23 +44,35 @@ class WebSocketConnection extends EventEmitter {
     
     _hbtimeout() {
         if (!this.acked) {
-            throw new Error("Did not recieve acknowledgement of heartbeat between them.");
+            this.emit("debug", "Did not recieve heartbeat acknowledgement.");
             // try to resume
+            return this._attemptresume();
         }
         
-        this.emit("debug", "Recieved heartbeat acknowledgement");
+        this.emit("debug", "Recieved heartbeat acknowledgement.");
 
         this.acked = false;
         this.socket.send(JSON.stringify({
             "op": 1,
             "d": this.lastS
-        }))
+        }));
         
         this.hb = setTimeout(this._hbtimeout.bind(this), this.hbinterval);
     }
 
+    _attemptresume() {
+        this.emit("debug", "Attempting to resume session " + this.session);
+        this.socket.send(JSON.stringify({
+            "op": 6,
+            "d": {
+                "token": this.token,
+                "session_id": this.session, 
+                "seq": this.lastS
+            }
+        }));
+    }
+
     _identifymyself() {
-        
         this.emit("debug", "Sending identify packet");
 
         this.socket.send(JSON.stringify({
@@ -89,6 +101,11 @@ class WebSocketConnection extends EventEmitter {
             this.lastS = data.s;
             if (data.t === "MESSAGE_CREATE") {
                 this.emit("message", data.d);
+            } else if (data.t === "READY") {
+                this.session = data.d.session_id;
+                this.emit("debug", "Connected with session " + this.session);
+            } else if (data.t === "RESUMED") {
+                this.emit("debug", "Successfully resumed session.");
             }
         }
     }

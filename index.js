@@ -9,7 +9,7 @@ try {
 }
 
 conn.on("message", message => {
-    console.log(message);
+    // console.log(message);
 })
 
 conn.on("close", data => {
